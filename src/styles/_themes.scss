@@ -1,0 +1,99 @@
+:root {
+  --color-primary: #e07a3a;
+  --color-primary-hover: #c96830;
+  --color-primary-light: #fdf4ec;
+
+  --color-secondary: #1a2332;
+  --color-secondary-hover: #253448;
+
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+
+  --color-text: #1a2332;
+  --color-text-light: #64748b;
+  --color-text-muted: #94a3b8;
+
+  --color-bg: #f8f9fa;
+  --color-bg-white: #ffffff;
+  --color-border: #e5e7eb;
+  --color-border-hover: #d1d5db;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
+
+  --header-bg: #ffffff;
+  --hero-gradient-start: #1a2332;
+  --hero-gradient-mid: #c96830;
+  --hero-gradient-end: #e09560;
+  --slider-bg: rgba(255, 255, 255, 0.07);
+  --slider-border: rgba(255, 255, 255, 0.1);
+  --features-bg: #ffffff;
+  --footer-bg: #1a2332;
+  --footer-text: #94a3b8;
+  --footer-border: #253448;
+
+  --cnc-accent: #e07a3a;
+  --cnc-accent-hover: #c96830;
+  --cnc-accent-light: #fdf4ec;
+  --cnc-bg: #fafafa;
+  --cnc-card-bg: #ffffff;
+  --cnc-border: #f0dcc8;
+  --cnc-glow: rgba(224, 122, 58, 0.1);
+
+  --print-accent: #7c6aaf;
+  --print-accent-hover: #6b5a9e;
+  --print-accent-light: #f4f2f9;
+  --print-bg: #faf9fc;
+  --print-card-bg: #ffffff;
+  --print-border: #d8d0e8;
+  --print-glow: rgba(124, 106, 175, 0.1);
+}
+
+[data-theme="dark"] {
+  --color-primary: #e07a3a;
+  --color-primary-hover: #e8935a;
+  --color-primary-light: rgba(224, 122, 58, 0.12);
+
+  --color-text: #e8eaed;
+  --color-text-light: #9aa0a6;
+  --color-text-muted: #6b7280;
+
+  --color-bg: #111827;
+  --color-bg-white: #1f2937;
+  --color-border: #374151;
+  --color-border-hover: #4b5563;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.5);
+
+  --header-bg: #1a2332;
+  --hero-gradient-start: #0f1520;
+  --hero-gradient-mid: #9a5a2e;
+  --hero-gradient-end: #c96830;
+  --slider-bg: rgba(255, 255, 255, 0.04);
+  --slider-border: rgba(255, 255, 255, 0.06);
+  --features-bg: #1a2332;
+  --footer-bg: #0f1520;
+  --footer-text: #6b7280;
+  --footer-border: #1f2937;
+
+  --cnc-accent: #e07a3a;
+  --cnc-accent-hover: #e8935a;
+  --cnc-accent-light: rgba(224, 122, 58, 0.1);
+  --cnc-bg: #111827;
+  --cnc-card-bg: #1f2937;
+  --cnc-border: #5c3a1e;
+  --cnc-glow: rgba(224, 122, 58, 0.08);
+
+  --print-accent: #9b8bc4;
+  --print-accent-hover: #b0a3d4;
+  --print-accent-light: rgba(124, 106, 175, 0.1);
+  --print-bg: #111827;
+  --print-card-bg: #1f2937;
+  --print-border: #3d2e6b;
+  --print-glow: rgba(124, 106, 175, 0.08);
+}

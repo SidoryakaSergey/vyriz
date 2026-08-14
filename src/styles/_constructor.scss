@@ -1,0 +1,400 @@
+@use 'variables' as *;
+
+.constructor {
+  padding: 64px 0 80px;
+
+  &__tabs {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 48px;
+    background: $color-bg-white;
+    border-radius: $radius-full;
+    padding: 5px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid $color-border;
+    box-shadow: $shadow-sm;
+  }
+
+  &__tab {
+    padding: 11px 32px;
+    border-radius: $radius-full;
+    font-size: 14px;
+    font-weight: 700;
+    color: $color-text-light;
+    transition: all $transition-fast;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+
+    &:hover { color: $color-text; }
+
+    &--active {
+      color: white;
+      box-shadow: $shadow-md;
+    }
+
+    &--cnc.constructor__tab--active {
+      background: var(--cnc-accent);
+      &:hover { background: var(--cnc-accent-hover); }
+    }
+
+    &--print.constructor__tab--active {
+      background: var(--print-accent);
+      &:hover { background: var(--print-accent-hover); }
+    }
+  }
+
+  &__tab-icon { font-size: 16px; }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  &__title {
+    font-size: 34px;
+    font-weight: 800;
+    color: $color-text;
+    margin-bottom: 10px;
+
+    @media (max-width: $breakpoint-md) { font-size: 26px; }
+  }
+
+  &__subtitle {
+    font-size: 16px;
+    color: $color-text-light;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 28px;
+    align-items: start;
+
+    @media (max-width: $breakpoint-lg) { grid-template-columns: 1fr; }
+  }
+
+  &__form {
+    background: $color-bg-white;
+    border-radius: $radius-xl;
+    padding: 28px;
+    box-shadow: $shadow-md;
+    border: 1px solid $color-border;
+    transition: all 0.3s ease;
+  }
+
+  &__section {
+    margin-bottom: 24px;
+    &:last-child { margin-bottom: 0; }
+  }
+
+  &__label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: $color-text;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  &__shapes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+
+    @media (max-width: $breakpoint-sm) { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  &__shape {
+    padding: 12px 6px;
+    border: 2px solid $color-border;
+    border-radius: $radius-md;
+    text-align: center;
+    transition: all $transition-fast;
+    cursor: pointer;
+    background: $color-bg-white;
+
+    &:hover { border-color: var(--cnc-accent); background: var(--cnc-accent-light); }
+
+    &--active {
+      border-color: var(--cnc-accent);
+      background: var(--cnc-accent-light);
+      box-shadow: 0 0 0 3px var(--cnc-glow);
+    }
+  }
+
+  &__shape-icon { font-size: 26px; margin-bottom: 2px; }
+
+  &__shape-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__dimensions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+
+    @media (max-width: $breakpoint-sm) { grid-template-columns: 1fr; }
+  }
+
+  &__input-group {
+    position: relative;
+
+    label {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      color: $color-text-muted;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      padding-right: 34px;
+      border: 2px solid $color-border;
+      border-radius: $radius-md;
+      font-size: 14px;
+      font-weight: 600;
+      color: $color-text;
+      transition: border-color $transition-fast;
+      background: $color-bg-white;
+
+      &:focus { border-color: var(--cnc-accent); }
+      &::placeholder { color: $color-text-muted; font-weight: 400; }
+    }
+  }
+
+  &__unit {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: $color-text-muted;
+  }
+
+  &__materials {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+
+    @media (max-width: $breakpoint-sm) { grid-template-columns: 1fr; }
+  }
+
+  &__material {
+    padding: 10px 12px;
+    border: 2px solid $color-border;
+    border-radius: $radius-md;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all $transition-fast;
+    cursor: pointer;
+    background: $color-bg-white;
+
+    &:hover { border-color: var(--cnc-accent); }
+
+    &--active {
+      border-color: var(--cnc-accent);
+      background: var(--cnc-accent-light);
+      box-shadow: 0 0 0 3px var(--cnc-glow);
+    }
+  }
+
+  &__material-color {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  &__material-info { flex: 1; min-width: 0; }
+
+  &__material-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__material-price {
+    font-size: 10px;
+    color: $color-text-light;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__material-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid $color-border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-fast;
+    flex-shrink: 0;
+
+    &::after {
+      content: '\2713';
+      font-size: 10px;
+      color: white;
+      opacity: 0;
+      transition: opacity $transition-fast;
+    }
+  }
+
+  &__material--active &__material-check {
+    background: var(--cnc-accent);
+    border-color: var(--cnc-accent);
+    &::after { opacity: 1; }
+  }
+
+  &__quantity {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  &__qty-controls {
+    display: flex;
+    align-items: center;
+    border: 2px solid $color-border;
+    border-radius: $radius-md;
+    overflow: hidden;
+  }
+
+  &__qty-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: $color-text;
+    transition: all $transition-fast;
+    background: $color-bg-white;
+
+    &:hover { background: var(--cnc-accent-light); }
+  }
+
+  &__qty-value {
+    width: 52px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: $color-text;
+    border-left: 2px solid $color-border;
+    border-right: 2px solid $color-border;
+    height: 40px;
+    line-height: 40px;
+  }
+
+  &__qty-label {
+    font-size: 13px;
+    color: $color-text-light;
+  }
+
+  // 3D Print specific
+  &__weight-display {
+    background: var(--print-bg);
+    border: 2px solid var(--print-border);
+    border-radius: $radius-lg;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+
+  &__weight-value {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--print-accent);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  &__weight-unit {
+    font-size: 13px;
+    color: $color-text-light;
+  }
+
+  &__slider-group { margin-bottom: 6px; }
+
+  &__slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  &__slider-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__slider-value {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--print-accent);
+  }
+
+  &__slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--print-border);
+    outline: none;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--print-accent);
+      cursor: pointer;
+      border: 3px solid white;
+      box-shadow: $shadow-md;
+    }
+
+    &::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--print-accent);
+      cursor: pointer;
+      border: 3px solid white;
+      box-shadow: $shadow-md;
+    }
+  }
+
+  .print__materials .constructor__material {
+    &:hover { border-color: var(--print-accent); }
+
+    &--active {
+      border-color: var(--print-accent);
+      background: var(--print-accent-light);
+      box-shadow: 0 0 0 3px var(--print-glow);
+    }
+  }
+
+  .print__materials .constructor__material--active .constructor__material-check {
+    background: var(--print-accent);
+    border-color: var(--print-accent);
+  }
+}
