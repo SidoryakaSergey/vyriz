@@ -1,12 +1,13 @@
-import { MATERIALS, SHAPES } from './data.js';
+import { MATERIALS } from './data.js';
 
-function calculatePrice(shape, width, height, thickness, materialId, quantity) {
+function calculatePrice(shape, width, height, thickness, materialId, quantity, wallThickness = 5) {
   const material = MATERIALS.find((m) => m.id === materialId);
   if (!material || !width || !height || !thickness || !quantity) return 0;
 
   const w = width / 1000;
   const h = height / 1000;
   const t = thickness / 1000;
+  const wall = wallThickness / 1000;
 
   let volumeFactor = 1;
 
@@ -16,18 +17,30 @@ function calculatePrice(shape, width, height, thickness, materialId, quantity) {
       volumeFactor = Math.PI * radius * radius;
       break;
     }
-    case 'triangle':
-      volumeFactor = (w * h) / 2;
+    case 'rectangle-cutout': {
+      const iw = Math.max(w - wall * 2, 0);
+      const ih = Math.max(h - wall * 2, 0);
+      volumeFactor = w * h - iw * ih;
       break;
-    case 'hexagon':
-      volumeFactor = (3 * Math.sqrt(3) / 2) * Math.pow(Math.min(w, h) / 2, 2);
+    }
+    case 'circle-cutout': {
+      const outerR = Math.min(w, h) / 2;
+      const innerR = Math.max(outerR - wall, 0);
+      volumeFactor = Math.PI * outerR * outerR - Math.PI * innerR * innerR;
       break;
-    case 'l-shape':
-      volumeFactor = w * h * 0.6;
+    }
+    case 'frame-rect': {
+      const iw = Math.max(w - wall * 2, 0);
+      const ih = Math.max(h - wall * 2, 0);
+      volumeFactor = w * h - iw * ih;
       break;
-    case 'u-shape':
-      volumeFactor = w * h * 0.5;
+    }
+    case 'frame-circle': {
+      const outerR = Math.min(w, h) / 2;
+      const innerR = Math.max(outerR - wall, 0);
+      volumeFactor = Math.PI * outerR * outerR - Math.PI * innerR * innerR;
       break;
+    }
     default:
       volumeFactor = w * h;
   }

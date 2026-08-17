@@ -1,11 +1,16 @@
 import { SHAPES, MATERIALS, PRINT_MATERIALS } from './data.js';
 import { calculatePrice, calculatePrintPrice, formatPrice } from './priceCalculator.js';
+import { initEditor, refresh } from './editor2d.js';
 
 let activeTab = 'cnc';
 
 // ==================== CNC ====================
-const cncState = { shape: 'rectangle', width: 100, height: 100, thickness: 3, material: 'pvc', quantity: 1 };
+const cncState = { shape: 'rectangle', width: 100, height: 100, thickness: 3, wallThickness: 5, material: 'pvc', quantity: 1 };
 const cncCart = [];
+
+const CNC_SHAPES_WITH_WALL = ['rectangle-cutout', 'circle-cutout', 'frame-rect', 'frame-circle'];
+
+function hasWall() { return CNC_SHAPES_WITH_WALL.includes(cncState.shape); }
 
 function updateCncPreview() {
   const el = document.getElementById('cnc-preview');
@@ -15,18 +20,25 @@ function updateCncPreview() {
 }
 
 function updateCncSummary() {
-  const price = calculatePrice(cncState.shape, cncState.width, cncState.height, cncState.thickness, cncState.material, cncState.quantity);
+  const price = calculatePrice(cncState.shape, cncState.width, cncState.height, cncState.thickness, cncState.material, cncState.quantity, cncState.wallThickness);
   const material = MATERIALS.find((m) => m.id === cncState.material);
   const shape = SHAPES.find((s) => s.id === cncState.shape);
 
   const summary = document.getElementById('cnc-summary');
   if (summary) {
-    summary.innerHTML = `
+    let rows = `
       <div class="cart__row"><span class="cart__row-label">Форма</span><span class="cart__row-value">${shape ? shape.name : '—'}</span></div>
-      <div class="cart__row"><span class="cart__row-label">Розміри</span><span class="cart__row-value">${cncState.width} × ${cncState.height} × ${cncState.thickness} мм</span></div>
+      <div class="cart__row"><span class="cart__row-label">Зовн. розміри</span><span class="cart__row-value">${cncState.width} × ${cncState.height} мм</span></div>
+    `;
+    if (hasWall()) {
+      rows += `<div class="cart__row"><span class="cart__row-label">Стінка</span><span class="cart__row-value">${cncState.wallThickness} мм</span></div>`;
+    }
+    rows += `
+      <div class="cart__row"><span class="cart__row-label">Товщина</span><span class="cart__row-value">${cncState.thickness} мм</span></div>
       <div class="cart__row"><span class="cart__row-label">Матеріал</span><span class="cart__row-value">${material ? material.name : '—'}</span></div>
       <div class="cart__row"><span class="cart__row-label">Кількість</span><span class="cart__row-value">${cncState.quantity} шт.</span></div>
     `;
+    summary.innerHTML = rows;
   }
 
   const totalEl = document.getElementById('cnc-total');
@@ -83,6 +95,13 @@ function renderCncCart() {
       renderCncCart();
     });
   });
+}
+
+function syncCncInputs() {
+  const w = document.getElementById('cnc-width');
+  const h = document.getElementById('cnc-height');
+  if (w) w.value = cncState.width;
+  if (h) h.value = cncState.height;
 }
 
 // ==================== 3D PRINT ====================
@@ -156,6 +175,11 @@ function renderPrintCart() {
 }
 
 // ==================== INIT ====================
+function toggleWallSection() {
+  const wallSection = document.getElementById('wall-section');
+  if (wallSection) wallSection.style.display = hasWall() ? 'block' : 'none';
+}
+
 function initTabs() {
   const tabs = document.querySelectorAll('.constructor__tab');
   const cncPanel = document.getElementById('panel-cnc');
@@ -185,32 +209,54 @@ function initTabs() {
 }
 
 function initCnc() {
-  const shapesEl = document.getElementById('cnc-shapes');
-  if (shapesEl) {
-    shapesEl.innerHTML = SHAPES.map((s) => `
-      <div class="constructor__shape${s.id === cncState.shape ? ' constructor__shape--active' : ''}" data-shape="${s.id}">
-        <div class="constructor__shape-icon">${s.icon}</div>
-        <div class="constructor__shape-name">${s.name}</div>
-      </div>
-    `).join('');
-
-    shapesEl.addEventListener('click', (e) => {
-      const el = e.target.closest('.constructor__shape');
-      if (!el) return;
-      cncState.shape = el.dataset.shape;
-      shapesEl.querySelectorAll('.constructor__shape').forEach((s) => s.classList.toggle('constructor__shape--active', s.dataset.shape === cncState.shape));
+  // Shape select
+  const selectEl = document.getElementById('cnc-shape');
+  if (selectEl) {
+    selectEl.innerHTML = SHAPES.map((s) =>
+      `<option value="${s.id}"${s.id === cncState.shape ? ' selected' : ''}>${s.name}</option>`
+    ).join('');
+    selectEl.addEventListener('change', (e) => {
+      cncState.shape = e.target.value;
+      toggleWallSection();
       updateCncPreview();
       updateCncSummary();
+      refresh();
     });
   }
 
+  // 2D Editor
+  const editorWrap = document.getElementById('editor-wrap');
+  if (editorWrap) {
+    initEditor(
+      editorWrap,
+      () => ({ shape: cncState.shape, width: cncState.width, height: cncState.height, thickness: cncState.thickness, wallThickness: cncState.wallThickness }),
+      (dims) => {
+        cncState.width = dims.width;
+        cncState.height = dims.height;
+        syncCncInputs();
+        updateCncSummary();
+        refresh();
+      }
+    );
+  }
+
+  // Dimensions
   const w = document.getElementById('cnc-width');
   const h = document.getElementById('cnc-height');
   const t = document.getElementById('cnc-thickness');
-  if (w) { w.value = cncState.width; w.addEventListener('input', (e) => { cncState.width = parseFloat(e.target.value) || 0; updateCncSummary(); }); }
-  if (h) { h.value = cncState.height; h.addEventListener('input', (e) => { cncState.height = parseFloat(e.target.value) || 0; updateCncSummary(); }); }
-  if (t) { t.value = cncState.thickness; t.addEventListener('input', (e) => { cncState.thickness = parseFloat(e.target.value) || 0; updateCncSummary(); }); }
+  const wall = document.getElementById('cnc-wall');
 
+  if (w) { w.value = cncState.width; w.addEventListener('input', (e) => { cncState.width = parseFloat(e.target.value) || 0; updateCncSummary(); refresh(); }); }
+  if (h) { h.value = cncState.height; h.addEventListener('input', (e) => { cncState.height = parseFloat(e.target.value) || 0; updateCncSummary(); refresh(); }); }
+  if (t) { t.value = cncState.thickness; t.addEventListener('input', (e) => { cncState.thickness = parseFloat(e.target.value) || 0; updateCncSummary(); }); }
+  if (wall) {
+    wall.value = cncState.wallThickness;
+    wall.addEventListener('input', (e) => { cncState.wallThickness = parseFloat(e.target.value) || 1; updateCncSummary(); refresh(); });
+  }
+
+  toggleWallSection();
+
+  // Materials
   const matsEl = document.getElementById('cnc-materials');
   if (matsEl) {
     matsEl.innerHTML = MATERIALS.map((m) => `
@@ -233,6 +279,7 @@ function initCnc() {
     });
   }
 
+  // Quantity
   const qtyVal = document.querySelector('.cnc-qty-value');
   document.querySelector('.cnc-qty-minus')?.addEventListener('click', () => {
     if (cncState.quantity > 1) { cncState.quantity--; if (qtyVal) qtyVal.textContent = cncState.quantity; updateCncSummary(); }
@@ -241,8 +288,9 @@ function initCnc() {
     if (cncState.quantity < 10000) { cncState.quantity++; if (qtyVal) qtyVal.textContent = cncState.quantity; updateCncSummary(); }
   });
 
+  // Add to cart
   document.getElementById('cnc-add-btn')?.addEventListener('click', () => {
-    const price = calculatePrice(cncState.shape, cncState.width, cncState.height, cncState.thickness, cncState.material, cncState.quantity);
+    const price = calculatePrice(cncState.shape, cncState.width, cncState.height, cncState.thickness, cncState.material, cncState.quantity, cncState.wallThickness);
     cncCart.push({ ...cncState, totalPrice: price });
     renderCncCart();
   });

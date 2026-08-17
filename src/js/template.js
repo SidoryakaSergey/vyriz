@@ -72,8 +72,13 @@ function renderApp() {
           <div class="constructor__form">
             <div id="panel-cnc">
               <div class="constructor__section">
-                <label class="constructor__label">Форма деталі</label>
-                <div class="constructor__shapes" id="cnc-shapes"></div>
+                <label class="constructor__label" for="cnc-shape">Форма деталі</label>
+                <select class="constructor__select" id="cnc-shape"></select>
+              </div>
+
+              <div class="constructor__section">
+                <label class="constructor__label">2D превью — тягніть за кути</label>
+                <div class="editor-wrap" id="editor-wrap"></div>
               </div>
 
               <div class="constructor__section">
@@ -81,17 +86,28 @@ function renderApp() {
                 <div class="constructor__dimensions">
                   <div class="constructor__input-group">
                     <label for="cnc-width">Довжина</label>
-                    <input type="number" id="cnc-width" min="1" max="3000" step="0.1" placeholder="100" />
+                    <input type="number" id="cnc-width" min="10" max="3000" step="0.1" placeholder="100" />
                     <span class="constructor__unit">мм</span>
                   </div>
                   <div class="constructor__input-group">
                     <label for="cnc-height">Ширина</label>
-                    <input type="number" id="cnc-height" min="1" max="1500" step="0.1" placeholder="100" />
+                    <input type="number" id="cnc-height" min="10" max="1500" step="0.1" placeholder="100" />
                     <span class="constructor__unit">мм</span>
                   </div>
                   <div class="constructor__input-group">
-                    <label for="cnc-thickness">Товщина</label>
+                    <label for="cnc-thickness">Товщина мат.</label>
                     <input type="number" id="cnc-thickness" min="0.5" max="50" step="0.5" placeholder="3" />
+                    <span class="constructor__unit">мм</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="constructor__section" id="wall-section" style="display:none;">
+                <label class="constructor__label">Товщина стінки (мм)</label>
+                <div class="constructor__dimensions">
+                  <div class="constructor__input-group">
+                    <label for="cnc-wall">Стінка</label>
+                    <input type="number" id="cnc-wall" min="1" max="200" step="0.5" placeholder="5" />
                     <span class="constructor__unit">мм</span>
                   </div>
                 </div>

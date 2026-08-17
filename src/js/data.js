@@ -1,10 +1,10 @@
 const SHAPES = [
   { id: 'rectangle', name: 'Прямокутник', icon: '▬' },
   { id: 'circle', name: 'Коло', icon: '●' },
-  { id: 'triangle', name: 'Трикутник', icon: '▲' },
-  { id: 'hexagon', name: 'Шестикутник', icon: '⬡' },
-  { id: 'l-shape', name: 'Г-подібна', icon: '⌐' },
-  { id: 'u-shape', name: 'П-подібна', icon: '⊔' },
+  { id: 'rectangle-cutout', name: 'Прямокутник з вирізом', icon: '▢' },
+  { id: 'circle-cutout', name: 'Коло з вирізом', icon: '◎' },
+  { id: 'frame-rect', name: 'Рамка прямокутна', icon: '☐' },
+  { id: 'frame-circle', name: 'Рамка кругла', icon: '⊙' },
 ];
 
 const MATERIALS = [
