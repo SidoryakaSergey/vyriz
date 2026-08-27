@@ -1,6 +1,6 @@
 function renderApp() {
-  const app = document.getElementById('app');
-  const savedTheme = localStorage.getItem('theme') || 'light';
+  const app = document.getElementById("app");
+  const savedTheme = localStorage.getItem("theme") || "light";
 
   app.innerHTML = `
     <header class="header">
@@ -9,7 +9,7 @@ function renderApp() {
           <img class="icon-img icon-img--light" src="/src/img/logo/MECHACUT_icon_light.png" alt="MECHACUT" />
           <img class="icon-img icon-img--dark" src="/src/img/logo/MECHACUT_icon_dark.png" alt="MECHACUT" />
           <div class="header__logo-text">
-            <span class="header__brand">МЕХАКУТ</span>
+            <span class="header__brand">MECHACUT</span>
             <span class="header__tagline">ЧПУ • 3Д • Прототипи</span>
           </div>
         </a>
@@ -309,22 +309,24 @@ function renderApp() {
     </footer>
   `;
 
-  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.documentElement.setAttribute("data-theme", savedTheme);
   updateThemeIcon(savedTheme);
 
-  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+  document
+    .getElementById("theme-toggle")
+    ?.addEventListener("click", toggleTheme);
 }
 
 function updateThemeIcon(theme) {
-  const btn = document.getElementById('theme-toggle');
-  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  const btn = document.getElementById("theme-toggle");
+  if (btn) btn.textContent = theme === "dark" ? "☀️" : "🌙";
 }
 
 function toggleTheme() {
-  const current = document.documentElement.getAttribute('data-theme');
-  const next = current === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
+  const current = document.documentElement.getAttribute("data-theme");
+  const next = current === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("theme", next);
   updateThemeIcon(next);
 }
 
