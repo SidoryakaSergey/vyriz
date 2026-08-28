@@ -117,28 +117,12 @@
   width: 42px;
   object-fit: contain;
   border-radius: $radius-md;
-  transition: opacity 0.2s ease;
-
-  &--dark { display: none; }
-}
-
-[data-theme="dark"] .icon-img {
-  &--light { display: none; }
-  &--dark { display: block; }
 }
 
 .logo-img {
-  height: 36px;
+  height: 48px;
   width: auto;
   object-fit: contain;
-  transition: opacity 0.2s ease;
-
-  &--dark { display: none; }
-}
-
-[data-theme="dark"] .logo-img {
-  &--light { display: none; }
-  &--dark { display: block; }
 }
 
 .theme-toggle {

@@ -1,16 +1,15 @@
 function renderApp() {
-  const app = document.getElementById("app");
-  const savedTheme = localStorage.getItem("theme") || "light";
+  const app = document.getElementById('app');
+  const savedTheme = localStorage.getItem('theme') || 'light';
 
   app.innerHTML = `
     <header class="header">
       <div class="container header__inner">
-        <a href="/" class="header__logo">
-          <img class="icon-img icon-img--light" src="/src/img/logo/MECHACUT_icon_light.png" alt="MECHACUT" />
-          <img class="icon-img icon-img--dark" src="/src/img/logo/MECHACUT_icon_dark.png" alt="MECHACUT" />
+        <a href="./" class="header__logo">
+          <img class="icon-img" src="./img/logo.png" alt="Formcut" />
           <div class="header__logo-text">
-            <span class="header__brand">MECHACUT</span>
-            <span class="header__tagline">ЧПУ • 3Д • Прототипи</span>
+            <span class="header__brand">Formcut</span>
+            <span class="header__tagline">ЧПУ різання • 3Д друк</span>
           </div>
         </a>
         <nav class="header__nav">
@@ -257,19 +256,18 @@ function renderApp() {
         <div class="footer__grid">
           <div class="footer__brand">
             <div class="footer__logo">
-              <img class="logo-img logo-img--light" src="/src/img/logo/MECHACUT_logo_light.png" alt="MECHACUT" />
-              <img class="logo-img logo-img--dark" src="/src/img/logo/MECHACUT_logo_dark.png" alt="MECHACUT" />
+              <img class="logo-img" src="./img/logo.png" alt="Formcut" />
             </div>
             <p class="footer__desc">Порізка ПВХ, пластику та карбону. 3Д друк деталей будь-якої складності.</p>
             <div class="footer__social">
               <a href="#" class="footer__social-link" aria-label="GitHub">
-                <svg width="16" height="16"><use href="/icons.svg#github-icon"/></svg>
+                <svg width="16" height="16"><use href="icons.svg#github-icon"/></svg>
               </a>
               <a href="#" class="footer__social-link" aria-label="Discord">
-                <svg width="16" height="16"><use href="/icons.svg#discord-icon"/></svg>
+                <svg width="16" height="16"><use href="icons.svg#discord-icon"/></svg>
               </a>
               <a href="#" class="footer__social-link" aria-label="X">
-                <svg width="16" height="16"><use href="/icons.svg#x-icon"/></svg>
+                <svg width="16" height="16"><use href="icons.svg#x-icon"/></svg>
               </a>
             </div>
           </div>
@@ -302,31 +300,29 @@ function renderApp() {
           </div>
         </div>
         <div class="footer__bottom">
-          <span>© 2026 МЕХАКУТ. Усі права захищені.</span>
+          <span>© 2026 Formcut. Усі права захищені.</span>
           <span>Точна робота з будь-якими матеріалами</span>
         </div>
       </div>
     </footer>
   `;
 
-  document.documentElement.setAttribute("data-theme", savedTheme);
+  document.documentElement.setAttribute('data-theme', savedTheme);
   updateThemeIcon(savedTheme);
 
-  document
-    .getElementById("theme-toggle")
-    ?.addEventListener("click", toggleTheme);
+  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
 }
 
 function updateThemeIcon(theme) {
-  const btn = document.getElementById("theme-toggle");
-  if (btn) btn.textContent = theme === "dark" ? "☀️" : "🌙";
+  const btn = document.getElementById('theme-toggle');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
 }
 
 function toggleTheme() {
-  const current = document.documentElement.getAttribute("data-theme");
-  const next = current === "dark" ? "light" : "dark";
-  document.documentElement.setAttribute("data-theme", next);
-  localStorage.setItem("theme", next);
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
   updateThemeIcon(next);
 }
 
